@@ -1,0 +1,36 @@
+---
+title: "Homework 3"
+author: "Jieqi Tu"
+date: "3/30/2021"
+output: pdf_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+## 5.14
+Assuming $\pi_1 = \pi_2 = \cdots = \pi_N = \pi$, then the log likelihood would be
+$$L(\pi)=\sum_{i=1}^{N}y_ilog(\pi)+(n_i-y_i)log(1-\pi)$$
+Take the first derivative, we can get $$L'(\pi)=\frac{\sum{y_i}}{\pi}-\frac{\sum{n_i-y_i}}{1-\pi}$$
+Set it equal to 0, we can get $$\hat{\pi}=(\sum{y_i})(\sum{n_i})$$
+And the second derivative of $L(\pi)$ also confirms that $\hat{\pi}$ maximizes the likelihood function.
+Then the Pearson statistic for ungrouped data (when $ n_i=1$) is:
+$$\begin{split}
+\chi^2 &= \sum{\frac{(observed-fitted)^2}{fitted}} \\
+&= \sum_{i=1}^{N} \sum_{j=1}^{n_i} \frac{(y_{ij}-\hat{\pi})^2}{\hat{\pi}} + \frac{[1-y_{ij}-(1-\hat{\pi})]^2}{1-\hat{\pi}} \\
+&= \sum_{i=1}^{N} \sum_{j=1}^{n_i} \frac{(y_{ij}-\hat{\pi})^2}{\hat{\pi}(1-\hat{\pi})}\\
+&= \frac{N\hat{\pi}(1-\hat{\pi})}{\hat{\pi}(1-\hat{\pi})} = N
+
+\end{split}$$
+
+Since the Pearson statistic $\chi^2=N$, the statistic is not informative for us to test the goodness-of-fit of the null model.
+
+## 5.15
+$$\begin{split}
+D(y; \boldsymbol{\hat{\mu}})&=2\sum observed\times log(observed/fitted) \\
+&=
+\end{split}$$
