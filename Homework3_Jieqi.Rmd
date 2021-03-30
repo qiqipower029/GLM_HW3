@@ -16,7 +16,7 @@ library(tidyverse)
 Assuming $\pi_1 = \pi_2 = \cdots = \pi_N = \pi$, then the log likelihood would be
 $$L(\pi)=\sum_{i=1}^{N}y_ilog(\pi)+(n_i-y_i)log(1-\pi)$$
 Take the first derivative, we can get $$L'(\pi)=\frac{\sum{y_i}}{\pi}-\frac{\sum{n_i-y_i}}{1-\pi}$$
-Set it equal to 0, we can get $$\hat{\pi}=(\sum{y_i})(\sum{n_i})$$
+Set it equal to 0, we can get $$\hat{\pi}=(\sum{y_i})/(\sum{n_i})$$
 And the second derivative of $L(\pi)$ also confirms that $\hat{\pi}$ maximizes the likelihood function.
 Then the Pearson statistic for ungrouped data (when $ n_i=1$) is:
 $$\begin{split}
@@ -30,7 +30,11 @@ $$\begin{split}
 Since the Pearson statistic $\chi^2=N$, the statistic is not informative for us to test the goodness-of-fit of the null model.
 
 ## 5.15
+The log likelihood is $\sum_i[y_ilog\pi_i+(1-y_i)log(1-\pi_i)]$. For the saturated model, we have $\hat{\pi_i}=y_i$ and the value of the log likehood of saturated model equals 0 (because $y_i$ can only take value of 0 and 1).
 $$\begin{split}
-D(y; \boldsymbol{\hat{\mu}})&=2\sum observed\times log(observed/fitted) \\
-&=
+D(y; \boldsymbol{\hat{\mu}})&=-2\sum observed\times log(observed/fitted) \\
+&=-2 (\sum_i y_{ij}log(\frac{y_i}{\hat{\pi_i}})+\sum_i (1-y_i)log(\frac{1-y_i}{1-\hat{\pi}})) \\
+&=-2\sum_i [y_ilog(\frac{\hat{\pi_i}}{1-\hat{\pi_i}})+log(1-\hat{\pi_i})] \\
+&=-2 \sum_i [y_i(\beta_0 + \beta_1x_i) + log(1-\hat{\pi_i})]
 \end{split}$$
+From 5.14, we could know that 
