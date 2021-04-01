@@ -11,7 +11,14 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
+
 ## 5.3
+
+#### (a)
+```{r}
+
+```
+
 ## 5.14
 Assuming $\pi_1 = \pi_2 = \cdots = \pi_N = \pi$, then the log likelihood would be
 $$L(\pi)=\sum_{i=1}^{N}y_ilog(\pi)+(n_i-y_i)log(1-\pi)$$
