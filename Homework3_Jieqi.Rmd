@@ -10,7 +10,6 @@ editor_options:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
-library(ROCR)
 library(pROC)
 ```
 
@@ -65,6 +64,20 @@ summary(toy.model3)
 
 In this case, we have AUC = 0.5 exactly and the ROC looks like a straight line. In this case, the standard error of the estimated coefficient for x is reasonable.
 
+## 5.5
+
+We now know that $n_iy_i\sim Binomial(n_i, \pi_i)$ and $\mu_i = E(y_i)=\pi_i$.
+In addition, since $\pi_i = F(\sum_j \beta_{j}x_{ij})$, we also have $n_i = F^{-1}(\pi_i)$ (as $F$ is absolutely continuous).Another equation is $n_i = \sum_j \beta_j x_{ij}$.
+
+According to the likelihood equation, we have: 
+$$\begin{split}
+\frac{\partial L(\mathbf{\beta})}{\partial \beta_j} &= \sum_{i=1}^{N} \frac{n_i(y_i-\mu_i)}{var(y_i)}\cdot  \frac{\partial \mu_i}{\partial n_i}\\ &= \sum_{i=1}^{N} \frac{n_i(y_i-\mu_i)}{var(y_i)}\cdot f(n_i)\space [f(\cdot) \space is \space the \space pdf \space corresponding \space to \space F(\cdot)] \\
+\end{split}$$
+
+Therefore, we obtain:
+$$w_i = (\frac{\partial \mu_i}{\partial n_i})^2/var(y_i) = f^2(n_i)/var(y_i)$$
+Then, let $W$ be the diagonal matrix with $w_i$ as the main diagonal elements. 
+Hence the information matrix for MLE $\hat {\boldsymbol{\beta}}$ $J=X'WX$ and $var(\hat{\boldsymbol{\beta}}})=J^{-1}$.
 
 ## 5.14
 Assuming $\pi_1 = \pi_2 = \cdots = \pi_N = \pi$, then the log likelihood would be
