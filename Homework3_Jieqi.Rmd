@@ -39,7 +39,6 @@ $$\begin{split}
 &= \sum_{i=1}^{N} \sum_{j=1}^{n_i} \frac{(y_{ij}-\hat{\pi})^2}{\hat{\pi}} + \frac{[1-y_{ij}-(1-\hat{\pi})]^2}{1-\hat{\pi}} \\
 &= \sum_{i=1}^{N} \sum_{j=1}^{n_i} \frac{(y_{ij}-\hat{\pi})^2}{\hat{\pi}(1-\hat{\pi})}\\
 &= \frac{N\hat{\pi}(1-\hat{\pi})}{\hat{\pi}(1-\hat{\pi})} = N
-
 \end{split}$$
 
 Since the Pearson statistic $\chi^2=N$, the statistic is not informative for us to test the goodness-of-fit of the null model.
