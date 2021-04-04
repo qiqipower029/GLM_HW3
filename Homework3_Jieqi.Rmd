@@ -11,21 +11,60 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(ROCR)
+library(pROC)
 ```
 
 ## 5.3
 
 #### (a)
 Construct the ROC curve for the toy example in Section 5.4.2. with complete separation.
-```{r}
+```{r 5.3a}
 # data import
 x = c(1, 2, 3, 4, 5, 6)
 y = c(1, 1, 1, 0, 0, 0)
 
 # fit model
 toy.model = glm(y~x, family = "binomial")
-pred = prediction(fitted(toy.model), y)
+toy.pred = predict(toy.model, newdata = data.frame(x))
+toy.roc = roc(y, toy.pred)
+plot(toy.roc, legacy.axes = T, print.auc = T)
+summary(toy.model)
 ```
+
+From the result we could see that, when fitting the GLM, we have a warning message saying that fitted probabilities numerically 0 or 1 occurred. This implies complete/semi-complete separation occurred. 
+We could see that the AUC = 1. Therefore, in this case, we have complete separation.The standard error of the estimated coefficient for x is very large.
+
+#### (b)
+Add two observations at x = 0.5, one with y = 1 and one with 0.
+```{r 5.3b}
+x = c(1, 2, 3, 3.5, 3.5, 4, 5, 6)
+y = c(1, 1, 1, 1, 0, 0, 0, 0)
+
+toy.model2 = glm(y~x, family = "binomial")
+toy.pred = predict(toy.model2, newdata = data.frame(x))
+toy.roc = roc(y, toy.pred)
+plot(toy.roc, legacy.axes = T, print.auc = T)
+summary(toy.model2)
+```
+
+In this case, we have AUC = 0.969.But we also have the warning message. So we are facing the semi-complete separation. The standard error for estimated coefficient for x is still very large.
+
+Then we want to construct a toy data set with n = 8 and the area under the ROC curve equals 0.5.
+```{r 5.3c}
+# construct new dataset
+x.new = c(1, 1, 2, 2, 3, 3, 4, 4)
+y.new = c(1, 0, 1, 0, 1, 0, 1, 0)
+
+# fit new model for new dataset
+toy.model3 = glm(y.new~x.new, family = "binomial")
+toy.pred = predict(toy.model3, newdata = data.frame(x.new))
+toy.roc = roc(y.new, toy.pred)
+plot(toy.roc, legacy.axes = T, print.auc = T)
+summary(toy.model3)
+```
+
+In this case, we have AUC = 0.5 exactly and the ROC looks like a straight line. In this case, the standard error of the estimated coefficient for x is reasonable.
+
 
 ## 5.14
 Assuming $\pi_1 = \pi_2 = \cdots = \pi_N = \pi$, then the log likelihood would be
