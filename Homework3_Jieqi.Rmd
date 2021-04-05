@@ -77,7 +77,15 @@ $$\begin{split}
 Therefore, we obtain:
 $$w_i = (\frac{\partial \mu_i}{\partial n_i})^2/var(y_i) = f^2(n_i)/var(y_i)$$
 Then, let $W$ be the diagonal matrix with $w_i$ as the main diagonal elements. 
-Hence the information matrix for MLE $\hat {\boldsymbol{\beta}}$ $J=X'WX$ and $var(\hat{\boldsymbol{\beta}}})=J^{-1}$.
+Hence the information matrix for MLE $\hat {\boldsymbol{\beta}}$ $J=X'WX$ and $var(\hat{\boldsymbol{\beta}})=J^{-1}$.
+
+## 5.9
+
+Use conditional logistic regression to test $H_0: \beta_1 = 0$ against $H_1: \beta_1<0$ for the toy example in Section 5.4.2.
+```{r clogit}
+
+```
+
 
 ## 5.14
 Assuming $\pi_1 = \pi_2 = \cdots = \pi_N = \pi$, then the log likelihood would be
