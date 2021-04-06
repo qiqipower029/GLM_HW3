@@ -82,8 +82,15 @@ Hence the information matrix for MLE $\hat {\boldsymbol{\beta}}$ $J=X'WX$ and $v
 ## 5.9
 
 Use conditional logistic regression to test $H_0: \beta_1 = 0$ against $H_1: \beta_1<0$ for the toy example in Section 5.4.2.
+According to the textbook page #175-176, we could know that,,
+The p-value is $1-P(s_1\ge t \space | \space s_1+s_2)$, for observed value $t$ for $s_1$.
 ```{r clogit}
-
+library(survival)
+# data import
+x = c(1, 2, 3, 4, 5, 6)
+y = c(1, 1, 1, 0, 0, 0)
+clogistic = clogit(y~x)
+summary(clogistic)
 ```
 
 
@@ -104,7 +111,7 @@ $$\begin{split}
 Since the Pearson statistic $\chi^2=N$, the statistic is not informative for us to test the goodness-of-fit of the null model.
 
 ## 5.15
-The log likelihood is $\sum_i[y_ilog\pi_i+(1-y_i)log(1-\pi_i)]$. For the saturated model, we have $\hat{\pi_i}=y_i$ and the value of the log likehood of saturated model equals 0 (because $y_i$ can only take value of 0 and 1).
+The log likelihood is $\sum_i[y_ilog\pi_i+(1-y_i)log(1-\pi_i)]$. For the saturated model, we have $\hat{\pi_i}=y_i$ and the value of the log likelihood of saturated model equals 0 (because $y_i$ can only take value of 0 and 1).
 $$\begin{split}
 D(y; \boldsymbol{\hat{\mu}})&=-2\sum observed\times log(observed/fitted) \\
 &=-2 (\sum_i y_{ij}log(\frac{y_i}{\hat{\pi_i}})+\sum_i (1-y_i)log(\frac{1-y_i}{1-\hat{\pi}})) \\
@@ -119,3 +126,14 @@ D&=-2[\hat{\beta_0}\sum_i\hat{\pi_i}+\hat{\beta_1}\sum_ix_i\hat{\pi_i}+\sum_ilog
 &=-2\sum_i\hat{\pi_i}log(\frac{\hat{\pi_i}}{1-\hat{\pi_i}})-2\sum_ilog(1-\hat{\pi_i})
 \end{split}$$
 Therefore, the deviance only depends on $\hat{\pi_i}$, and it is uninformative for checking model fit.
+
+## 5.16
+
+#### (a)
+If we treat the data as N binomial observations and let $s_i=\sum_{j=1}^{n_i}$, the kernel of the log likelihood is:
+$$L(\mathbf{\pi})=\sum_{i=1}^{N}=s_i log(\pi_i)+ (n_i - s_i)log(1-\pi_i)$$
+If we treat the data as n Bernoulli observations, the kernel of the log likelihood is 
+$$\begin{split}
+L(\mathbf{\pi})&=\sum_{i=1}^{N} \sum_{j=1}^{n_i} y_{ij} log(\pi_i) + (1 -y_{ij})log(1-\pi_i)\\
+&=\sum_{i=1}^{N} s_i log(\pi_i) + (n_i-s_i)log(1-\pi_i)
+\end{split}$$
