@@ -189,3 +189,23 @@ The differences between the deviances are the same.
 16.3 - 11.0 = 6.3 - 1.0 = 5.3
 
 Explanation: the only difference between log likelihoods of these two data entry forms is the binomial coefficients. However, it cancels out when we do the subtraction. Therefore, the differences of deviances are the same.
+
+## 5.19
+
+Suppose $\pi_{ab} + \pi_{ba} =1$ and we are using the model 
+$$log(\pi_{ab}/\pi_{ba})=\beta_a-\beta_b.$$
+For $a<b$, let $N_{ab}$ denote the number of matches between teams $a$ and $b$, with team $a$ winning $n_{ab}$ times and team $b$ winning $n_{ba}$ times.
+
+#### (a)
+
+Find the log-likelihood, treating $n_{ab}$ as a binomial variate for $N_{ab}$ trials. Show that sufficient statistics are $\left\{n_{a+}\right\}$, so that "victory totals" determine the estimated ranking of teams.
+Since $\pi_{ab} + \pi_{ba} =1$, we have $\pi_{ba} = 1 - \pi_{ab}$. Then the model could be re-written as:
+$$log(\frac{\pi_{ab}}{1-\pi_{ab}})=\beta_a-\beta_b$$
+The likelihood function would be:
+$$\begin{split}
+l &= {N_{ab}\choose n_{ab}}\cdot \pi_{ab}^{n_{ab}} \cdot (1- \pi_{ab})^{N_{ab}-n_{ab}} \\
+&={N_{ab}\choose n_{ab}}\cdot(1-\pi_{ab})^{N_{ab}}\cdot [\frac{\pi_{ab}}{(1-\pi_{ab})}]^{n_{ab}}
+\end{split}$$
+So the first two terms are the function related to $n_{ab}$ and the later two terms are the function related to $\pi_{ab}$ and it interact with $\pi_{ab}$ only through $n_{ab}$.
+
+#### (b)
