@@ -9,7 +9,6 @@ editor_options:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(tidyverse)
 library(pROC)
 ```
 
@@ -130,6 +129,7 @@ Therefore, the deviance only depends on $\hat{\pi_i}$, and it is uninformative f
 ## 5.16
 
 #### (a)
+
 If we treat the data as N binomial observations and let $s_i=\sum_{j=1}^{n_i}$, the kernel of the log likelihood is:
 $$L(\mathbf{\pi})=\sum_{i=1}^{N}=s_i log(\pi_i)+ (n_i - s_i)log(1-\pi_i)$$
 If we treat the data as n Bernoulli observations, the kernel of the log likelihood is 
@@ -137,3 +137,15 @@ $$\begin{split}
 L(\mathbf{\pi})&=\sum_{i=1}^{N} \sum_{j=1}^{n_i} y_{ij} log(\pi_i) + (1 -y_{ij})log(1-\pi_i)\\
 &=\sum_{i=1}^{N} s_i log(\pi_i) + (n_i-s_i)log(1-\pi_i)
 \end{split}$$
+
+#### (b)
+
+For saturated model, explain why the likelihood function is different for these two data forms.
+
+* If we treat the data as N Binomial observations, there are N parameters ($\pi_1, \cdots,\pi_N$).
+* If we treat the data as n Bernoulli observations, there are n parameters ($\pi_{11},\cdots,\pi_{Nn_i}$).
+
+#### (c)
+
+Explain why the difference between deviances for two unsaturated models does not depend on the form of data entry.
+
