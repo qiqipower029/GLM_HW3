@@ -175,5 +175,17 @@ model.grouped = glm(resp~x.group, family = "binomial")
 summary(model.grouped)
 ```
 
+From the summaries, we could know that:
+
+* For ungrouped data, the deviance for $M_0$ us 16.3 and the deviance for $M_1$ is 11.0.
+* For grouped data, the deviance for $M_0$ us 6.3 and the deviance for $M_1$ is 1.0.
+
+The saturated model in the ungrouped case has 12 parameters (df = 11) and the saturated model in the grouped case only has three parameters.
+
+
+#### (b)
+
 The differences between the deviances are the same. 
-16.3 - 11.0 = 6.3 - 1.0 = 5.3.
+16.3 - 11.0 = 6.3 - 1.0 = 5.3
+
+Explanation: the only difference between log likelihoods of these two data entry forms is the binomial coefficients. However, it cancels out when we do the subtraction. Therefore, the differences of deviances are the same.
