@@ -152,28 +152,3 @@ Explain why the difference between deviances for two unsaturated models does not
 They do not depend on the form of data entry because when subtracting, the log likelihood of saturated models cancel out, so the result only depends on the log likelihoods of unsaturated models. We aready know from (a) part that the log likelihood of unsaturated models do not depend on the form of data entry.
 
 ## 5.17
-
-Create a data file in two ways.
-
-#### (a)
-```{r create data}
-# Ungrouped data
-x.ungroup = c(rep(0, 4), rep(1, 4), rep(2, 4))
-y.ungroup = c(1, 0, 0, 0, 1, 1, 0, 0, rep(1, 4))
-
-# Grouped data
-x.group = c(0, 1, 2)
-n.trials = c(4, 4, 4)
-n.successes = c(1, 2, 4)
-resp = cbind(n.successes, n.trials - n.successes)
-
-# Fit models
-model.ungrouped = glm(y.ungroup ~ x.ungroup, family = "binomial")
-summary(model.ungrouped)
-
-model.grouped = glm(resp~x.group, family = "binomial")
-summary(model.grouped)
-```
-
-The differences between the deviances are the same. 
-16.3 - 11.0 = 6.3 - 1.0 = 5.3.
