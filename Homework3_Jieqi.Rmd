@@ -149,3 +149,6 @@ For saturated model, explain why the likelihood function is different for these 
 
 Explain why the difference between deviances for two unsaturated models does not depend on the form of data entry.
 
+They do not depend on the form of data entry because when subtracting, the log likelihood of saturated models cancel out, so the result only depends on the log likelihoods of unsaturated models. We aready know from (a) part that the log likelihood of unsaturated models do not depend on the form of data entry.
+
+## 5.17
