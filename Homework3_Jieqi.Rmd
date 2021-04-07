@@ -80,18 +80,9 @@ Hence the information matrix for MLE $\hat {\boldsymbol{\beta}}$ $J=X'WX$ and $v
 
 ## 5.9
 
-Use conditional logistic regression to test $H_0: \beta_1 = 0$ against $H_1: \beta_1<0$ for the toy example in Section 5.4.2.
-According to the textbook page #175-176, we could know that,,
-The p-value is $1-P(s_1\ge t \space | \space s_1+s_2)$, for observed value $t$ for $s_1$.
-```{r clogit}
-library(survival)
-# data import
-x = c(1, 2, 3, 4, 5, 6)
-y = c(1, 1, 1, 0, 0, 0)
-clogistic = clogit(y~x)
-summary(clogistic)
-```
-
+From the example, we know that $\sum_{i=1}^{6} y_i$ is number of 1's and $\sum_{i=1}^{6}x_iy_i$ is the sum of $x_i$s when $y_i$ is 1.
+Therefore, in this example, we already know that $\sum_i y_i=3$. Then set $\sum_{i=1}^{6}x_iy_i=t$. The distribution of $\sum_{i=1}^{6}x_iy_i=t$ can be written. $t$ can take values of $6, 7, 8, \cdots, 15$ with probability $\frac{1}{20},\frac{1}{20},\frac{2}{20},\frac{3}{20},\frac{3}{20},\frac{3}{20},\frac{3}{20},\frac{2}{20},\frac{1}{20},\frac{1}{20}$ respectively. 
+Hence, the exact p-value for $P(\sum_{i=1}^{6}x_iy_i\le6|\sum_{i=1}^{6}y_i=3)=\frac{1}{20}=0.05$.
 
 ## 5.14
 Assuming $\pi_1 = \pi_2 = \cdots = \pi_N = \pi$, then the log likelihood would be
@@ -209,3 +200,63 @@ l &= {N_{ab}\choose n_{ab}}\cdot \pi_{ab}^{n_{ab}} \cdot (1- \pi_{ab})^{N_{ab}-n
 So the first two terms are the function related to $n_{ab}$ and the later two terms are the function related to $\pi_{ab}$ and it interact with $\pi_{ab}$ only through $n_{ab}$.
 
 #### (b)
+
+Generalize the model to allow a "home-team advantage", with a team's chance of winning possibly increasing when it plays at its home city. Interpret parameters.
+
+The new model would be:
+$$log(\frac{\pi_{ab}}{1-\pi_{ab}})=\beta_a-\beta_b+\beta_{hc}\cdot X_{hc}$$
+Interpretation: The $X_{hc}$ is the indicator variable that implies whether the city is the home city for this team. If the city is the home city, then the log odds will increase by the value of $\beta_{hc}$
+
+## 5.20
+
+Let $y_i,i=1,\cdots,N$ denote $N$ independent binary random variables.
+
+#### (a)
+
+Derive the log likelihood for the probit model $\Phi^{-1}[\pi(\mathbf{x_i})]=\sum_{j} \beta_j x_{ij}$.
+
+The likelihood function is: 
+$$l(\pi(\mathbf{x_i})) = \Pi_{i=1}^{N} \pi(\mathbf{x_i})^{y_i}(1-\pi(\mathbf{x_i}))^{1-y_i}$$
+So the log likelihood can be written as:
+$$L(\bf{\pi}(\mathbf{x_i}))=\sum_{i=1}^{N}y_ilog(\bf{\pi}(\mathbf{x_i}))+(1-y_i)log(1-\bf{\pi}(\mathbf{x_i}))$$
+Then, since we are using probit link function, we have:
+$$\pi(\mathbf{x_i})=\Phi(\sum_{j} \beta_j x_{ij})$$
+Plug in the linkage, we will obtain that:
+$$L(\bf{\pi}(\mathbf{x_i}))=\sum_{i=1}^{N}y_ilog(\Phi(\sum_{j} \beta_j x_{ij}))+(1-y_i)log(1-\Phi(\sum_{j} \beta_j x_{ij}))$$
+
+#### (b)
+
+Show that the likelihood equations for the logistic and probit regression models are
+$$\sum_{i=1}^{N} (y_i-\hat{\pi_i})z_ix_{ij}=0, \space j=1, \cdots, p,$$
+where $z_i=1$ for the logistic case and $z_i$ = $\phi(\sum_{j} \hat{\beta_j} x_{ij})/ \hat{\pi_i}(1-\hat{\pi_i})$ for the probit case.
+
+In this case, we know that $\mu_i = \hat{\pi_i}$ and $var(y_i)=\hat{\pi_i}(1-\hat{\pi_i})$.
+
+The likelihood equations for the logistic and probit regression models are
+$$\begin{split}
+\frac{\partial L(\mathbf{\beta})}{\partial \beta_j}&=\sum_{i=1}^{N}\frac{(y_i-\mu_i)x_{ij}}{var(y_i)}\cdot \frac{\partial \mu_i}{\partial \eta_i} \\ 
+&=\sum_{i=1}^{N} (y_i - \hat{\pi_i})\cdot \phi(\sum_{j} \hat{\beta_j} x_{ij})x_{ij} / \hat{\pi_i}(1-\hat{\pi_i}) \\
+&= \sum_{i=1}^{N} (y_i-\hat{\pi_i})z_ix_{ij}=0
+\end{split}$$
+
+## 5.30
+
+We have 709 cases and 709 controls. This is a retrospective case-control study.
+In this study, we can estimate the odds ratio of having lung cancer for cases versus controls. 
+However, we cannot estimate the intercept (the log odds of having lung cancer for controls).
+The odds ratio would be $\frac{59\times688}{21\times650}=2.974$
+
+Here we also want to calculate the odds ratio by fitting a model.
+```{r clogit}
+
+# Create variables
+lung.cancer = c(rep(0, 709), rep(1, 709))
+smoking = c(rep(1, 650), rep(0, 709-650), rep(1, 688), rep(0, 709-688))
+strata = c(rep(0, 709), rep(1, 709))
+data = data.frame(lung.cancer, smoking, strata)
+
+model.clog = glm(lung.cancer~smoking,family = "binomial", data = data)
+summary(model.clog)
+```
+
+The odds ratio calculated by the model is $e^{1.0898}=2.974$, which is the same as what we have calculated by hand.
